@@ -26,3 +26,85 @@ def after_request(response):
 @app.route("/")
 def index():
     return "TO DO"
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """Register user"""
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+
+        # Validate submission
+        if not username:
+            flash("Must provide username", "error")
+            return render_template("register.html")
+        if not password:
+            flash("Must provide password", "error")
+            return render_template("register.html")
+        if password != confirmation:
+            flash("Passwords do not match", "error")
+            return render_template("register.html")
+
+        # Check if username already exists
+        cur = db.cursor()
+        cur.execute("SELECT * FROM users WHERE username = ?", (username))
+        if cur.fetchone():
+            flash("Username already taken", "error")
+            return render_template("register.html")
+
+        # Insert new user into database
+        hashed_password = generate_password_hash(password)
+        cur.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, hashed_password))
+        db.commit()
+
+        flash("Registered successfully!", "success")
+        return redirect("/")
+
+    else:
+        return render_template("register.html")
+    
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """Log user in"""
+    session.clear()
+
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        # Validate submission
+        if not username:
+            flash("Must provide username", "error")
+            return render_template("login.html")
+        if not password:
+            flash("Must provide password", "error")
+            return render_template("login.html")
+
+        # Query database for username
+        cur = db.cursor()
+        cur.execute("SELECT * FROM users WHERE username = ?", (username,))
+        user = cur.fetchone()
+
+        # Ensure username exists and password is correct
+        if not user or not check_password_hash(user[2], password):
+            flash("Invalid username and/or password", "error")
+            return render_template("login.html")
+
+        # Remember which user has logged in
+        session["user_id"] = user[0]
+
+        flash("Logged in successfully!", "success")
+        return redirect("/")
+
+    else:
+        return render_template("login.html")
+    
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+    session.clear()
+    flash("Logged out successfully!", "success")
+    return redirect("/")
+
