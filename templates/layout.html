@@ -9,16 +9,35 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
-        <title>ReWrited</title>
+        <title>Rewrited: {% block title %}{% endblock %}</title>
     </head>
 
     <body>
         <nav>
+            {% if session["user_id"] %}
+                <ul>
+                    <li class="padTitle"><a href="#" class="title">ReWrited</a></li>
+                    <li class="right"><a href="#">Log Out</a></li>
+                    <li class="right"><a href="#">Profile</a></li>
+                    <li class="right"><a href="#">Vocabulary</a></li>
+                    <li class="right"><a href="#">Write</a></li>
+                </ul>
+            {% else %}
             <ul>
-                <li><a href="#" class="bold">ReWrited</a></li>
+                <li class="padTitle"><a href="#" class="title">ReWrited</a></li>
                 <li class="right"><a href="#">Log In</a></li>
                 <li class="right"><a href="#">Register</a></li>
-            </ul>
+            </ul>            
+            {% endif %}
         </nav>
+
+        <main>
+            {% block body %}
+            {% endblock %}
+        </main>
+
+        <footer>
+            <p>&copy; ReWrited 2025</p>
+        </footer>
     </body>
 </html>

@@ -25,6 +25,13 @@ def after_request(response):
 
 @app.route("/")
 def index():
+    """View writing history"""
+    if "user_id" not in session:
+        flash("You must be logged in to view this page", "error")
+        return redirect("/login")
+
+    # TO DO: Retrieve and display user's writing history
+
     return "TO DO"
 
 @app.route("/register", methods=["GET", "POST"])
@@ -107,4 +114,37 @@ def logout():
     session.clear()
     flash("Logged out successfully!", "success")
     return redirect("/")
+
+@app.route("vocabulary", methods=["GET", "POST"])
+def vocabulary():
+    """Manage vocabulary"""
+    if "user_id" not in session:
+        flash("You must be logged in to view this page", "error")
+        return redirect("/login")
+
+    if request.method == "POST":
+        # TO DO: Add vocabulary word for user
+        pass
+    else:
+        # TO DO: Display user's vocabulary words
+        pass
+
+    return "TO DO"
+
+@app.route("/write", methods=["GET", "POST"])
+def write():
+    """Writing practice"""
+    if "user_id" not in session:
+        flash("You must be logged in to view this page", "error")
+        return redirect("/login")
+
+    if request.method == "POST":
+        # TO DO: Handle writing submission
+        pass
+    else:
+        # TO DO: Display writing practice interface
+        pass
+
+    return "TO DO"
+
 

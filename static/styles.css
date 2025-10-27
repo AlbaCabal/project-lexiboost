@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  font-family: "Open Sans";
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    background-color: #7ab9c4;
+    height: 5rem;
+    padding: 0rem 2rem;
+}
+
+.right{
+    float: right;
+    padding: 1.5rem 2rem;
+}
+
+.padTitle{
+    float: left;
+    padding: 1rem 2rem;
+}
+
+
+nav ul li a {
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-family: Open Sans;
+}
+
+nav ul li:hover {
+    background-color: #66979f;
+}
+
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+}
