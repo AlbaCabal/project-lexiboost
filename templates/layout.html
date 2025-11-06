@@ -16,17 +16,17 @@
         <nav>
             {% if session["user_id"] %}
                 <ul>
-                    <li class="padTitle"><a href="#" class="title">ReWrited</a></li>
-                    <li class="right"><a href="#">Log Out</a></li>
-                    <li class="right"><a href="#">Profile</a></li>
-                    <li class="right"><a href="#">Vocabulary</a></li>
-                    <li class="right"><a href="#">Write</a></li>
+                    <li class="padTitle"><a href="/" class="title">ReWrited</a></li>
+                    <li class="right"><a href="/logout">Log Out</a></li>
+                    <li class="right"><a href="/">Profile</a></li>
+                    <li class="right"><a href="/vocabulary">Vocabulary</a></li>
+                    <li class="right"><a href="/write">Write</a></li>
                 </ul>
             {% else %}
             <ul>
-                <li class="padTitle"><a href="#" class="title">ReWrited</a></li>
-                <li class="right"><a href="#">Log In</a></li>
-                <li class="right"><a href="#">Register</a></li>
+                <li class="padTitle"><a href="/" class="title">ReWrited</a></li>
+                <li class="right"><a href="/login">Log In</a></li>
+                <li class="right"><a href="/register">Register</a></li>
             </ul>            
             {% endif %}
         </nav>
@@ -36,8 +36,6 @@
             {% endblock %}
         </main>
 
-        <footer>
-            <p>&copy; ReWrited 2025</p>
-        </footer>
+
     </body>
 </html>

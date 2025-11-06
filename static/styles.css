@@ -39,3 +39,44 @@ nav ul li:hover {
     font-size: 2rem;
     font-weight: bold;
 }
+
+.center {
+    margin-top: 2rem;
+    margin-left: 42%;
+    align-content: center;
+}
+
+.button {
+    background-color: #9dcfd8;
+    border: none;
+    color: black;
+    padding: 0.7rem 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin: 2rem 2.5rem;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.inputField {
+    border-radius: 12px;
+    border: 2px solid #000000;
+    padding: 0.3rem;
+    font-size: 1rem;
+    font-family: "Open Sans";
+    margin-top: 0.3rem;
+
+}
+
+
+.inputBox {
+    width: 300px;
+    height: 100px;
+    border-radius: 12px;
+    border: 2px solid #7ab9c4;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-family: "Open Sans";
+}

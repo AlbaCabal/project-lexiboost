@@ -12,7 +12,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = sqlite3.connect("sqlite:///vocabulary.db")
+db = sqlite3.connect("lexiboost.db")
 
 
 @app.after_request
@@ -23,16 +23,6 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-@app.route("/")
-def index():
-    """View writing history"""
-    if "user_id" not in session:
-        flash("You must be logged in to view this page", "error")
-        return redirect("/login")
-
-    # TO DO: Retrieve and display user's writing history
-
-    return "TO DO"
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -115,7 +105,20 @@ def logout():
     flash("Logged out successfully!", "success")
     return redirect("/")
 
-@app.route("vocabulary", methods=["GET", "POST"])
+# * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+@app.route("/")
+def index():
+    """View writing history"""
+    if "user_id" not in session:
+        flash("You must be logged in to view this page", "error")
+        return redirect("/login")
+
+    # TO DO: Retrieve and display user's writing history
+
+    return render_template("index.html")
+
+@app.route("/vocabulary", methods=["GET", "POST"])
 def vocabulary():
     """Manage vocabulary"""
     if "user_id" not in session:
@@ -129,7 +132,7 @@ def vocabulary():
         # TO DO: Display user's vocabulary words
         pass
 
-    return "TO DO"
+    return render_template("vocabulary.html")
 
 @app.route("/write", methods=["GET", "POST"])
 def write():
@@ -145,6 +148,8 @@ def write():
         # TO DO: Display writing practice interface
         pass
 
-    return "TO DO"
+    return render_template("write.html")
 
 
+if __name__ == "__main__":
+    app.run(debug=True)
