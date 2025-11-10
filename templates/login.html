@@ -6,12 +6,19 @@
         <h2>Log in</h2>
         <form action="/login" method="post">
             <label for="username">Username</label><br>
-            <input class="inputField" type="text"><br><br>
+            <input class="inputField" autocomplete="off" name="username" placeholder="Username" type="text"><br><br>
             <label for="password">Password</label><br>
-            <input class="inputField" type="password"><br><br>
+            <input class="inputField" name="password" placeholder="Password" type="password"><br><br>
             <input class="button" type="submit" value="Log in">
         </form>        
     </div>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
 {% endblock %}

@@ -12,7 +12,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = sqlite3.connect("lexiboost.db")
+db = sqlite3.connect("lexiboost.db", check_same_thread=False)
 
 
 @app.after_request
@@ -45,14 +45,14 @@ def register():
 
         # Check if username already exists
         cur = db.cursor()
-        cur.execute("SELECT * FROM users WHERE username = ?", (username))
+        cur.execute("SELECT * FROM users WHERE username = ?", (username,))
         if cur.fetchone():
             flash("Username already taken", "error")
             return render_template("register.html")
 
         # Insert new user into database
         hashed_password = generate_password_hash(password)
-        cur.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, hashed_password))
+        cur.execute("INSERT INTO users (username, hash_password) VALUES (?, ?)", (username, hashed_password))
         db.commit()
 
         flash("Registered successfully!", "success")
@@ -153,3 +153,5 @@ def write():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+app.secret_key = "Clase.España.2007"
