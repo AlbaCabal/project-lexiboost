@@ -10,13 +10,13 @@
                 <th>Created</th>
                 <th>Level</th>
             </tr>
-            {% for item in history %}
-            <tr>
-                <td>{% item.name %}</td>
-                <td>{% item.date %}</td>
-                <td>{% item.level %}</td>
-            </tr>
-            {%endfor %}
+            {% for text in texts %}
+                <tr>
+                    <td>{{ text.name }}</td>
+                    <td>{{ text.date }}</td>
+                    <td>{{ text.level }}</td>
+                </tr>
+            {% endfor %}
         </table>       
     </div>
 
