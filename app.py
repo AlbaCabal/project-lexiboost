@@ -115,8 +115,8 @@ def index():
         return redirect("/login")
 
     # TO DO: Retrieve and display user's writing history
-
-    return render_template("index.html")
+    writing_history = db.execute("SELECT * FROM writing_history WHERE user_id = ?", (session["user_id"],)).fetchall()
+    return render_template("index.html", history=writing_history)
 
 @app.route("/vocabulary", methods=["GET", "POST"])
 def vocabulary():
