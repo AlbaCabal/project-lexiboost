@@ -2,23 +2,26 @@
 {% block title %}History{% endblock %}
 
 {% block body %}
-    <div class="center">
-        <h2>History</h2>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Created</th>
-                <th>Level</th>
-            </tr>
-            {% for text in texts %}
-                <tr>
-                    <td>{{ text.name }}</td>
-                    <td>{{ text.date }}</td>
-                    <td>{{ text.level }}</td>
-                </tr>
-            {% endfor %}
-        </table>       
-    </div>
+    <h2 class="center">History</h2>
+    <form action="">
+        <input class="inputField" type="text" placeholder="Word" name="word">
+        <input class="inputField larger" type="text" placeholder="Type" name="type">
+        <input class="button" type="submit" value="Add">
+    </form>
+    <table>
+        <tr>
+            <th id="tb_name">Name</th>
+            <th id="tb_created">Created</th>
+            <th id="tb_level">Level</th>
+        </tr>
+        {% for text in texts %}
+        <tr>
+            <td>{{ text.name }}</td>
+            <td>{{ text.date }}</td>
+            <td>{{ text.level }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

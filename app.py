@@ -131,8 +131,9 @@ def vocabulary():
     else:
         # TO DO: Display user's vocabulary words
         pass
-
-    return render_template("vocabulary.html")
+    dictionary = db.execute("SELECT * FROM vocabulary WHERE id_user = ?", (session["user_id"],)).fetchall()
+    user = db.execute("SELECT * FROM users WHERE id = ?", (session["user_id"],)).fetchone()
+    return render_template("vocabulary.html", dictionary=dictionary, user=user)
 
 @app.route("/write", methods=["GET", "POST"])
 def write():

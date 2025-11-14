@@ -67,7 +67,6 @@ nav ul li:hover {
     font-size: 1rem;
     font-family: "Open Sans";
     margin-top: 0.3rem;
-
 }
 
 
@@ -79,4 +78,37 @@ nav ul li:hover {
     padding: 0.5rem;
     font-size: 1rem;
     font-family: "Open Sans";
+}
+
+/*th, td, table {
+    border: 1px solid rgba(136, 136, 136, 0.577);
+    border-collapse: collapse;
+}*/
+th, td {
+  border-bottom: 1px solid rgba(136, 136, 136, 0.577);
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+table {
+    width: 95%;
+    margin-left: 2%;
+}
+table th, table td {
+    padding: 0.5rem;
+    text-align: left;
+    text-decoration: none;
+}
+
+#tb_name {
+    width: 60%;
+}
+
+#tb_created, 
+#tb_level {
+    width: 20%;
+}
+
+th {
+    background-color: #bababa78;
 }

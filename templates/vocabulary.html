@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}History{% endblock %}
+
+{% block body %}
+    <h2 class="center">Vocabulary</h2>
+    <table>
+        <tr>
+            <th id="tb_name">Word</th>
+            <th id="tb_created">Type</th>
+            <th id="tb_level">Level</th>
+        </tr>
+        {% for word in dictionary %}
+            <tr>
+                <td>{{ word.word }}</td>
+                <td>{{ word.type }}</td>
+                <td>{{ text.level }}</td>
+            </tr>
+        {% endfor %}
+    </table>       
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+{% endblock %}
