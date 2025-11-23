@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}History{% endblock %}
+
+{% block body %}
+    <h2 class="center">Write text</h2><br>
+
+    <form action="/templates/write.html" method="post">
+        <div class="container">
+            <label for="givenText">Your Text</label><br>
+            <textarea name="message" id="givenText" rows="25" cols="45" placeholder="Write your text here."></textarea>
+        </div>
+        <div class="container">
+            <label for="changedText">New Text</label><br>
+            <textarea name="message" id="changedText" rows="25" cols="45"></textarea>
+        </div>
+    </form>
+
+
+{% endblock %}

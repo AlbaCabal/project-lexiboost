@@ -113,3 +113,15 @@ table th, table td {
 th {
     background-color: #bababa78;
 }
+
+
+form {
+    padding: 0 10rem;
+    display: flex;
+}
+
+textarea {
+    border-radius: 1rem;
+    resize: none;
+    padding: 1rem;
+}

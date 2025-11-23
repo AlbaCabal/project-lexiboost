@@ -2,6 +2,7 @@ import sqlite3
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
+from datamuse import Datamuse
 
 # Configure application
 app = Flask(__name__)
@@ -14,6 +15,7 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = sqlite3.connect("lexiboost.db", check_same_thread=False)
 
+api = Datamuse()
 
 @app.after_request
 def after_request(response):
@@ -155,6 +157,10 @@ def write():
 
     if request.method == "POST":
         # TO DO: Handle writing submission
+        givenText = request.form.get("givenText")
+
+        # API for words - needs to be implemented
+        api.words(ml='happy', max=2)
         pass
     else:
         # TO DO: Display writing practice interface
