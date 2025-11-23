@@ -127,13 +127,24 @@ def vocabulary():
 
     if request.method == "POST":
         # TO DO: Add vocabulary word for user
-        pass
+        word = request.form.get("word")
+        word_type = request.form.get("type")
+        user = session["user_id"]
+        level_row = db.execute("SELECT level FROM users WHERE id_user = ?", (user,)).fetchone()
+        level = level_row[0]
+
+        cur = db.cursor()
+        cur.execute("INSERT INTO vocabulary (id_user, type, word, level) VALUES (?, ?, ?, ?)", (user, word_type, word, level))
+        db.commit()
+
+        flash("Word saved!", "success")
+        return redirect("/vocabulary")
     else:
         # TO DO: Display user's vocabulary words
-        pass
-    dictionary = db.execute("SELECT * FROM vocabulary WHERE id_user = ?", (session["user_id"],)).fetchall()
-    user = db.execute("SELECT * FROM users WHERE id = ?", (session["user_id"],)).fetchone()
-    return render_template("vocabulary.html", dictionary=dictionary, user=user)
+        dictionary = db.execute("SELECT * FROM vocabulary WHERE id_user = ?", (session["user_id"],)).fetchall()
+        user = db.execute("SELECT * FROM users WHERE id_user = ?", (session["user_id"],)).fetchone()
+        return render_template("vocabulary.html", words=dictionary, user=user)
+    
 
 @app.route("/write", methods=["GET", "POST"])
 def write():

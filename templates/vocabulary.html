@@ -3,19 +3,28 @@
 
 {% block body %}
     <h2 class="center">Vocabulary</h2>
+    <form class="center" action="vocabulary" method="post">
+        <input class="inputField" type="text" placeholder="Word" name="word">
+        <input class="inputField larger" type="text" placeholder="Type" name="type">
+        <input class="button" type="submit" value="Add">
+    </form>
     <table>
-        <tr>
-            <th id="tb_name">Word</th>
-            <th id="tb_created">Type</th>
-            <th id="tb_level">Level</th>
-        </tr>
-        {% for word in dictionary %}
+        <thead>
             <tr>
-                <td>{{ word.word }}</td>
-                <td>{{ word.type }}</td>
-                <td>{{ text.level }}</td>
-            </tr>
-        {% endfor %}
+                <th id="tb_name">Word</th>
+                <th id="tb_created">Type</th>
+                <th id="tb_level">Level</th>
+            </tr>            
+        </thead>
+        <tbody>
+            {% for word in words %}
+                <tr>
+                    <td>{{ word[3] }}</td>
+                    <td>{{ word[2] }}</td>
+                    <td>{{ word[4] }}</td>
+                </tr>
+            {% endfor %}            
+        </tbody>
     </table>       
 
     {% with messages = get_flashed_messages(with_categories=true) %}
