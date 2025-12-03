@@ -115,7 +115,7 @@ th {
 }
 
 
-form {
+.form_write {
     padding: 0 10rem;
     display: flex;
 }

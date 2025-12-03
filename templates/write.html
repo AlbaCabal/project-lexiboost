@@ -1,17 +1,33 @@
 {% extends "layout.html" %}
-{% block title %}History{% endblock %}
+{% block title %}Write{% endblock %}
 
 {% block body %}
     <h2 class="center">Write text</h2><br>
 
-    <form action="/templates/write.html" method="post">
-        <div class="container">
-            <label for="givenText">Your Text</label><br>
-            <textarea name="message" id="givenText" rows="25" cols="45" placeholder="Write your text here."></textarea>
+    <form action="/write" class="form_write" method="post">
+        <div class="container top">
+            <label for="username">Title</label><br>
+            <input class="inputField" autocomplete="off" name="title" placeholder="Title" type="text"><br><br>
         </div>
         <div class="container">
-            <label for="changedText">New Text</label><br>
-            <textarea name="message" id="changedText" rows="25" cols="45"></textarea>
+            {% if text %}
+                <label for="givenText">Your Text</label><br>
+                <textarea name="givenText" id="givenText" rows="25" cols="45" placeholder="Write your text here.">  {{ text }} </textarea>
+            {% else %}
+                <label for="givenText">Your Text</label><br>
+                <textarea name="givenText" id="givenText" rows="25" cols="45" placeholder="Write your text here."></textarea>
+            {% endif %}
+            <input class="button" type="submit" value="Submit">
+        </div>
+        <div class="container">
+            {% if newText %}
+                <label for="changedText">New Text</label><br>
+                <textarea name="message" id="changedText" rows="25" cols="45"> {{ newText }} </textarea>
+            {% else %}
+                <label for="changedText">New Text</label><br>
+                <textarea name="message" id="changedText" rows="25" cols="45"></textarea>
+            {% endif %}
+            
         </div>
     </form>
 

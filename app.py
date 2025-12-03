@@ -3,6 +3,7 @@ from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from datamuse import Datamuse
+import datetime
 
 # Configure application
 app = Flask(__name__)
@@ -157,16 +158,32 @@ def write():
 
     if request.method == "POST":
         # TO DO: Handle writing submission
+        title = request.form.get("title")
         givenText = request.form.get("givenText")
-
-        # API for words - needs to be implemented
-        api.words(ml='happy', max=2)
-        pass
+        replaceText = givenText
+        dicWords = db.execute("SELECT word FROM vocabulary")
+        if givenText is not None:
+            ArrayReplaceText = givenText.split()
+            for word in ArrayReplaceText:
+                synonymous = api.words(ml=word, max=3)
+                for synonym in synonymous:
+                    if synonym in dicWords[i][1]:
+                        replaceText = replaceText.replace(word, synonym)
+        
+        user = session["user_id"]
+        level_row = db.execute("SELECT level FROM users WHERE id_user = ?", (user,)).fetchone()
+        level = level_row[0]
+        date = datetime.date.today()
+        
+        cur = db.cursor()
+        cur.execute("INSERT INTO writing_history (id_user, title, original_text, corrected_text, date, level_used) VALUES (?, ? ,? ,? ,?, ?)", (user, title, givenText, replaceText, date, level))
+        db.commit
+    
+        return render_template("write.html", text=givenText, newText=replaceText)
+        
     else:
         # TO DO: Display writing practice interface
-        pass
-
-    return render_template("write.html")
+        return render_template("write.html")
 
 
 if __name__ == "__main__":
