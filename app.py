@@ -64,6 +64,7 @@ def register():
     else:
         return render_template("register.html")
     
+    
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
@@ -108,7 +109,6 @@ def logout():
     flash("Logged out successfully!", "success")
     return redirect("/")
 
-# * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 @app.route("/")
 def index():
@@ -116,10 +116,11 @@ def index():
     if "user_id" not in session:
         flash("You must be logged in to view this page", "error")
         return redirect("/login")
-
+    
     # TO DO: Retrieve and display user's writing history
     writing_history = db.execute("SELECT * FROM writing_history WHERE id_user = ?", (session["user_id"],)).fetchall()
-    return render_template("index.html", docs=writing_history)
+    return render_template("index.html", texts=writing_history)
+
 
 @app.route("/vocabulary", methods=["GET", "POST"])
 def vocabulary():
@@ -161,14 +162,25 @@ def write():
         title = request.form.get("title")
         givenText = request.form.get("givenText")
         replaceText = givenText
-        dicWords = db.execute("SELECT word FROM vocabulary")
+
+        dicWords = db.execute("SELECT word FROM vocabulary").fetchall()
+
         if givenText is not None:
-            ArrayReplaceText = givenText.split()
-            for word in ArrayReplaceText:
-                synonymous = api.words(ml=word, max=3)
-                for synonym in synonymous:
-                    if synonym in dicWords[i][1]:
-                        replaceText = replaceText.replace(word, synonym)
+            words = givenText.split()
+
+            for originalWord in words:
+                synonymous = api.words(ml=originalWord, max=5)
+
+                for x in synonymous:
+                    syn = x.get("word")
+
+                    for z in dicWords:
+                        if syn == z[0]:
+                            print(syn)
+                            print(z[0])
+                            replaceText = replaceText.replace(originalWord, syn)
+                            break
+        
         
         user = session["user_id"]
         level_row = db.execute("SELECT level FROM users WHERE id_user = ?", (user,)).fetchone()
@@ -177,7 +189,7 @@ def write():
         
         cur = db.cursor()
         cur.execute("INSERT INTO writing_history (id_user, title, original_text, corrected_text, date, level_used) VALUES (?, ? ,? ,? ,?, ?)", (user, title, givenText, replaceText, date, level))
-        db.commit
+        db.commit()
     
         return render_template("write.html", text=givenText, newText=replaceText)
         

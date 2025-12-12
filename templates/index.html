@@ -4,27 +4,21 @@
 {% block body %}
     <h2 class="center">History</h2>
     <br>
-    <table>
-        <tr>
-            <th id="tb_name">Name</th>
-            <th id="tb_created">Created</th>
-            <th id="tb_level">Level</th>
-        </tr>
+    <div class="tab">
         {% for text in texts %}
-        <tr>
-            <td>{{ text.name }}</td>
-            <td>{{ text.date }}</td>
-            <td>{{ text.level }}</td>
-        </tr>
+            <button class="tablinks" onclick="openText(event, '{{ text[2] }}')" id="{% if loop.first %}defaultOpen{% endif %}" >{{ text[2] }}</button>
         {% endfor %}
-    </table>
+    </div>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+    {% for text in texts %}
+    <div id='{{ text[2] }}' class="tabcontent">
+        <h3>{{ text[2] }}</h3>
+        <span>Original Text</span>
+        <p>{{ text[3] }}</p>
+        <br>
+        <span>Rewrited Text</span>
+        <p>{{ text[4] }}</p>
+    </div>
+    {% endfor %}
 
 {% endblock %}
