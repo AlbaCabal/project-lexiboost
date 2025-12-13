@@ -11,14 +11,14 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
-        <title>Rewrited: {% block title %}{% endblock %}</title>
+        <title>Lexiboost: {% block title %}{% endblock %}</title>
     </head>
 
     <body>
         <nav>
             {% if session["user_id"] %}
                 <ul>
-                    <li class="padTitle"><a href="/" class="title">ReWrited</a></li>
+                    <li class="padTitle"><a href="/" class="title">Lexiboost</a></li>
                     <li class="right"><a href="/logout">Log Out</a></li>
                     <li class="right"><a href="/">History</a></li>
                     <li class="right"><a href="/vocabulary">Vocabulary</a></li>
@@ -26,7 +26,7 @@
                 </ul>
             {% else %}
             <ul>
-                <li class="padTitle"><a href="/" class="title">ReWrited</a></li>
+                <li class="padTitle"><a href="/" class="title">Lexiboost</a></li>
                 <li class="right"><a href="/login">Log In</a></li>
                 <li class="right"><a href="/register">Register</a></li>
             </ul>            
