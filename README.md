@@ -1,6 +1,6 @@
 # LexiBoost
 
-## Video Demo: (url)
+## Video Demo: https://youtu.be/8ymwa4XrSKU
 
 ## Versions
 
