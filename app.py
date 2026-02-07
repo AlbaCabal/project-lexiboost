@@ -15,6 +15,8 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 db = sqlite3.connect("lexiboost.db", check_same_thread=False)
+db.execute('PRAGMA journal_mode = WAL')  # Safer than OFF
+db.execute('PRAGMA synchronous = NORMAL')
 
 api = Datamuse()
 

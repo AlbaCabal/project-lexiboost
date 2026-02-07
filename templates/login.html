@@ -3,12 +3,16 @@
 
 {% block body %}
     <div class="center">
-        <h2>Log in</h2><br>
-        <form action="/login" method="post">
-            <label for="username">Username</label><br>
-            <input class="inputField" autocomplete="off" name="username" placeholder="Username" type="text"><br><br>
-            <label for="password">Password</label><br>
-            <input class="inputField" name="password" placeholder="Password" type="password"><br><br>
+        <h2>Log in</h2>
+        <form action="/login" method="post" class="center">
+            <div>
+                <label for="username">Username</label><br>
+                <input class="inputField" autocomplete="off" name="username" placeholder="Username" type="text">
+            </div>
+            <div>
+                <label for="password">Password</label><br>
+                <input class="inputField" name="password" placeholder="Password" type="password">
+            </div>
             <input class="button" type="submit" value="Log in">
         </form>        
     </div>

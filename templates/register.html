@@ -4,13 +4,19 @@
 {% block body %}
     <div class="center">
         <h2>Register</h2>
-        <form action="/register" method="post">
-            <label for="username">Username</label><br>
-            <input class="inputField" autocomplete="off" name="username" placeholder="Username" type="text"><br><br>
-            <label for="password">Password</label><br>
-            <input class="inputField" name="password" placeholder="Password" type="password"><br><br>
-            <label for="password">Repeat password</label><br>
-            <input class="inputField" name="confirmation" placeholder="Password" type="password"><br><br>
+        <form action="/register" method="post" class="center">
+            <div>
+                <label for="username">Username</label><br>
+                <input class="inputField" autocomplete="off" name="username" placeholder="Username" type="text">
+            </div>
+            <div>
+                <label for="password">Password</label><br>
+                <input class="inputField" name="password" placeholder="Password" type="password">
+            </div>
+            <div>
+                <label for="password">Repeat password</label><br>
+                <input class="inputField" name="confirmation" placeholder="Password" type="password">
+            </div>
             <input class="button" type="submit" value="Register">
         </form>
     </div>

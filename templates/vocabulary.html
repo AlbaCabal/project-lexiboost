@@ -2,30 +2,34 @@
 {% block title %}Vocabulary{% endblock %}
 
 {% block body %}
-    <h2 class="center">Vocabulary</h2>
+<div class="center">
+    <h2>Vocabulary</h2>
     <form class="centerDiv" action="vocabulary" method="post">
         <input class="inputField" type="text" placeholder="Word" name="word">
         <input class="inputField" type="text" placeholder="Type" name="type">
         <input class="button" type="submit" value="Add">
     </form>
-    <br><br>
-    <table>
+    <table class="table table-hover">
         <thead>
             <tr>
-                <th id="tb_name">Word</th>
-                <th id="tb_created">Type</th>
-                <th id="tb_level">Level</th>
-            </tr>            
+                <th scope="col" id="tb_name">Word</th>
+                <th scope="col" id="tb_created">Type</th>
+                <th scope="col" id="tb_level">Level</th>
+                <th scope="col" id="tb_level"></th>
+            </tr>
         </thead>
         <tbody>
             {% for word in words %}
-                <tr>
-                    <td>{{ word[3] }}</td>
-                    <td>{{ word[2] }}</td>
-                    <td>{{ word[4] }}</td>
-                </tr>
-            {% endfor %}            
+            <tr>
+                <td scope="row">{{ word[3] }}</td>
+                <td>{{ word[2] }}</td>
+                <td>{{ word[4] }}</td>
+                <td>
+                    <i class="bi bi-trash3"></i>
+                </td>
+            </tr>
+            {% endfor %}
         </tbody>
-    </table>       
-
+    </table>
+</div>
 {% endblock %}
