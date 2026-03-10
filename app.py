@@ -1,20 +1,36 @@
 import sqlite3
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, g
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from datamuse import Datamuse
 import datetime
+from dotenv import load_dotenv
+import os
 
 # Configure application
 app = Flask(__name__)
+load_dotenv()
+app.secret_key = os.getenv("SECRET_KEY")
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure CS50 Library to use SQLite database
-db = sqlite3.connect("lexiboost.db", check_same_thread=False)
+# Configure Flask g to use SQLite database
+def get_db():
+    if 'db' not in g:
+        g.db = sqlite3.connect('lexiboost.db')
+        g.db.execute('PRAGMA journal_mode = WAL')
+        g.db.execute('PRAGMA synchronous = NORMAL')
+    return g.db
+
+@app.teardown_appcontext
+def close_db(e=None):
+    db = g.pop('db', None)
+
+    if db is not None:
+        db.close()
 
 api = Datamuse()
 
@@ -30,6 +46,7 @@ def after_request(response):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
+    db = get_db()
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -68,6 +85,7 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
+    db = get_db()
     session.clear()
 
     if request.method == "POST":
@@ -113,6 +131,7 @@ def logout():
 @app.route("/")
 def index():
     """View writing history"""
+    db = get_db()
     if "user_id" not in session:
         flash("You must be logged in to view this page", "error")
         return redirect("/login")
@@ -125,6 +144,7 @@ def index():
 @app.route("/vocabulary", methods=["GET", "POST"])
 def vocabulary():
     """Manage vocabulary"""
+    db = get_db()
     if "user_id" not in session:
         flash("You must be logged in to view this page", "error")
         return redirect("/login")
@@ -147,12 +167,14 @@ def vocabulary():
         # TO DO: Display user's vocabulary words
         dictionary = db.execute("SELECT * FROM vocabulary WHERE id_user = ?", (session["user_id"],)).fetchall()
         user = db.execute("SELECT * FROM users WHERE id_user = ?", (session["user_id"],)).fetchone()
+
         return render_template("vocabulary.html", words=dictionary, user=user)
     
 
 @app.route("/write", methods=["GET", "POST"])
 def write():
     """Writing practice"""
+    db = get_db()
     if "user_id" not in session:
         flash("You must be logged in to view this page", "error")
         return redirect("/login")
@@ -163,7 +185,7 @@ def write():
         givenText = request.form.get("givenText")
         replaceText = givenText
 
-        dicWords = db.execute("SELECT word FROM vocabulary").fetchall()
+        dicWords = db.execute("SELECT word FROM vocabulary WHERE id_user = ?", (session["user_id"],)).fetchall()
 
         if givenText is not None:
             words = givenText.split()
@@ -180,8 +202,7 @@ def write():
                             print(z[0])
                             replaceText = replaceText.replace(originalWord, syn)
                             break
-        
-        
+
         user = session["user_id"]
         level_row = db.execute("SELECT level FROM users WHERE id_user = ?", (user,)).fetchone()
         level = level_row[0]
@@ -190,7 +211,7 @@ def write():
         cur = db.cursor()
         cur.execute("INSERT INTO writing_history (id_user, title, original_text, corrected_text, date, level_used) VALUES (?, ? ,? ,? ,?, ?)", (user, title, givenText, replaceText, date, level))
         db.commit()
-    
+
         return render_template("write.html", text=givenText, newText=replaceText)
         
     else:
@@ -200,5 +221,3 @@ def write():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-app.secret_key = "Clase.España.2007"

@@ -1,0 +1,21 @@
+.navbar {
+    height: 5rem;
+    background-color: rgb(197, 225, 252);
+}
+
+.navbar-brand {
+    --bs-navbar-brand-font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-item:hover {
+    background-color: rgb(193, 224, 253);
+}
+
+.nav-link {
+    --bs-nav-link-font-size: 1.2rem;
+}
+
+.navbar-nav {
+    gap: 20px;
+}
