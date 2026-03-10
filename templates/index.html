@@ -6,7 +6,7 @@
     <br>
     <div class="tab">
         {% for text in texts %}
-            <button class="tablinks" onclick="openText(event, '{{ text[2] }}')" id="{% if loop.first %}defaultOpen{% endif %}" >{{ text[2] }}</button>
+            <button class="tablinks" onclick="openText(Event, '{{ text[2] }}')" id="{% if loop.first %}defaultOpen{% endif %}" >{{ text[2] }}</button>
         {% endfor %}
     </div>
 
