@@ -4,10 +4,11 @@
 
 ## Versions
 
-| Date     | Version | Description                                                 |
-| ---------- | ------- | ------------------------------------------------------------ |
+| Date       | Version | Description                                                 |
+|------------| ------- | ------------------------------------------------------------ |
 | 12/12/2025 | 1.0.0   | Initial version                                             |
-| 06/2/2026 | 2.0.0   | In progress                                             |
+| 23/04/2026 | 2.0.0   | In progress                                             |
+
 
 ## Description
 LexiBoost is a web application created to help English learners improve their writing by practicing vocabulary usage. The main goal of this project is not to check grammar, rephrase sentences, or correct writing mistakes. Instead, LexiBoost focuses on a single and clear task: finding simple words in a text and replacing them with similar words that the user is learning.

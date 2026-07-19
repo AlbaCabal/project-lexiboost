@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}Write{% endblock %}
+
+{% block body %}
+<div>
+    <h2 class="center">Write text</h2>
+
+    <form action="/write" class="form_write center" method="post">
+        <div>
+            <label id="username">Title</label><br>
+            <input class="inputField larger" autocomplete="off" name="title" placeholder="Title" type="text" required>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label id="givenText">Your Text</label><br>
+                <textarea name="givenText" class="givenText" rows="15" cols="50" placeholder="Write your text here.">{% if text %}{{ text }}{% endif %}</textarea>
+            </div>
+            <div class="col-6">
+                <label id="changedText">New Text</label><br>
+                <textarea name="message" class="changedText" rows="15" cols="50">{% if newText %}{{ newText }}{% endif %}</textarea>
+            </div>
+        </div>
+        <input class="button" type="submit" value="Submit">
+        
+    </form>
+</div>
+
+{% endblock %}

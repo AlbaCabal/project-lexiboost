@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}History{% endblock %}
+
+{% block body %}
+    <h2 class="center">History</h2>
+    <br>
+    <div class="tab">
+        {% for text in texts %}
+            <button class="tablinks" onclick="openText(event, '{{ text.title }}')" id="{% if loop.first %}defaultOpen{% endif %}" >{{ text.title }}</button>
+        {% endfor %}
+    </div>
+
+    {% for text in texts %}
+        <div id='{{ text.title }}' class="tabcontent">
+            <h3>{{ text.title }}</h3>
+            <span>Original Text</span>
+            <p>{{ text.original_text }}</p>
+            <br>
+            <span>Rewrited Text</span>
+            <p>{{ text.corrected_text }}</p>
+        </div>
+    {% endfor %}
+
+{% endblock %}
