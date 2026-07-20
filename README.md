@@ -1,6 +1,10 @@
 # LexiBoost
 
-## Video Demo: https://youtu.be/8ymwa4XrSKU
+## Live demo: https://project-lexiboost.onrender.com
+## Video demo: https://youtu.be/8ymwa4XrSKU
+## Screenshot
+![img.png](img.png)
+
 
 ## Versions
 
@@ -42,13 +46,38 @@ LexiBoost was built using:
 - **MySQL**: Relational database.
 - **SQLAlchemy**: ORM used to map Python classes to database tables and simplify database operations.
 - **Flask-Session**: Server-side session management.
-- **HTML and CSS**
-- **Jinja2**
-- **JavaScript**
+- **HTML, CSS, JavaScript, Jinja2**
 - **Datamuse API**: Used to find words that are similar in meaning.
 - **Pytest**: Unit testing framework.
 
+## Setup (run locally)
+```bash
+# Clone the repo
+git clone https://github.com/AlbaCabal/lexiboost.git
+cd lexiboost
+
+# Create a virtual environment
+python -m venv venv
+source venv/bin/activate   # Windows: venv\\\\Scripts\\\\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set environment variables (create a .env file)
+# DATABASE\\\_URL=mysql://user:password@localhost/lexiboost
+# SECRET\\\_KEY=your-secret-key
+
+# Run the app
+flask run
+```
+Run the test suite with:
+```bash
+pytest
+```
+
 ## Project Structure
+The project follows a modular architecture inspired by the MVC pattern, using Flask's **Application Factory** pattern so the app can be configured and tested independently of a single global instance.
+
 - `app/`
   - `__init__.py`
   - `extensions.py`
@@ -81,67 +110,22 @@ LexiBoost was built using:
   - `test_vocabulary.py`
 - `requirements.txt`
 - `pytest.ini`
----
-## Project Architecture
-The project follows a modular architecture inspired by the MVC pattern.
 
-### Application Factory
-The application is created using Flask's Application Factory pattern inside __init__.py.
-This approach makes the project easier to configure, test and extend.
+**Routes** are split into Blueprints by responsibility (auth vs. content), keeping each file small and focused.
 
-### Models
-The models.py file defines the database structure using SQLAlchemy.
-The main models are:
-- User
-- Vocabulary
-- History
-- SearchedWord
+**Services** hold the business logic separately from the HTTP layer — `vocabulary_service.py` handles adding/retrieving/deleting vocabulary and duplicate checks, `history_service.py` stores and retrieves writing history, `user_service.py` handles user operations. This keeps routes thin and makes the logic unit-testable without spinning up a Flask request context.
 
-Relationships between models are managed through SQLAlchemy.
-
-### Routes
-Routes are divided into Blueprints.
-
-auth_routes.py → Handles authentication:
-- Register
-- Login
-- Logout
-
-content_routes.py → Handles the application features:
-- Writing
-- Vocabulary
-- History
-
-Separating routes improves readability and scalability.
-
-### Services
-Business logic is separated from HTTP routes.
-
-user_service.py → contains operations related to users.
-
-vocabulary_service.py → Handles adding vocabulary, retrieving vocabulary, deleting vocabulary, checking duplicates
-
-history_service.py → Stores and retrieves user writing history.
-
-Keeping business logic inside services keeps the routes small and easier to maintain.
-
----
 ## Design Decisions
-Several architectural decisions were made while developing version 2.0.
+* **Service Layer**: business logic was moved out of routes into dedicated service classes, making it reusable and testable in isolation.
+* **Flask Blueprints**: routes were split by functionality instead of one large file.
+* **SQLAlchemy**: reduced raw SQL and made schema changes easier to manage.
+* **User-specific vocabulary**: each user maintains an independent list, enabling personalized learning.
+* **Writing history**: every submitted text is saved so learners can track vocabulary progress over time.
 
-### Service Layer
-Business logic was moved from routes into dedicated service classes. This makes the code more reusable and easier to test.
-### Flask Blueprints
-Routes were separated by functionality instead of keeping everything in a single file.
-### SQLAlchemy
-Using an ORM simplified database operations and reduced the amount of SQL code required.
-### User-specific vocabulary
-Each user maintains an independent vocabulary list, allowing personalized learning.
-### Writing history
-Saving every submitted text allows learners to review previous writing and monitor their vocabulary progress over time.
+## What I learned
+Migrating from a single-file CS50 script to a Blueprint + Service Layer + SQLAlchemy structure was the main challenge of v2.0.0. The biggest lesson was around **dependency resolution in production**: a naming collision between two similarly-named PyPI packages (`datamuse` vs `python-datamuse`) caused a `500` error on Render that didn't reproduce locally, since both were installed in my local environment but only one was pinned correctly in `requirements.txt`. It reinforced the importance of testing installs in a clean virtual environment before deploying.
 
 ## Future Improvements
-The following features could be added in future versions of LexiBoost:
 - **Predefined vocabulary by level**: Add built-in vocabulary lists for common English levels such as B1, B2, C1, and C2, so users can start practicing without manually adding every word.
 - **Grammar and spelling correction**: Extend the application to detect and correct basic grammar and spelling mistakes, making it a more complete writing support tool.
 - **Visual highlight for changed words**: Show replaced words with a green underline, so users can easily see what was modified in their text.
