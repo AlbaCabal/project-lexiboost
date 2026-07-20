@@ -22,8 +22,10 @@ def create_app(test_config=None):
     database = os.getenv("NAME_BD")
 
     app.config["SQLALCHEMY_DATABASE_URI"] = (
-        f"mysql+pymysql://{user}:{password}@{host}/{database}?ssl-mode=REQUIRED"
+        f"mysql+pymysql://{user}:{password}@{host}/{database}"
     )
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "connect_args": {"ssl": {"ssl_mode": "REQUIRED"}}}
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     if test_config:
