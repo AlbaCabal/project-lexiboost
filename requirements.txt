@@ -1,6 +1,6 @@
 flask
 Flask-Session
-datamuse
+python-datamuse
 werkzeug
 python-dotenv
 flask-sqlalchemy
