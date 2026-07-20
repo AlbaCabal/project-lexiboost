@@ -22,7 +22,7 @@ def create_app(test_config=None):
     database = os.getenv("NAME_BD")
 
     app.config["SQLALCHEMY_DATABASE_URI"] = (
-        f"mysql+pymysql://{user}:{password}@{host}/{database}"
+        f"mysql+pymysql://{user}:{password}@{host}/{database}?ssl-mode=REQUIRED"
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 

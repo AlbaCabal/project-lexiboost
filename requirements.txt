@@ -1,4 +1,3 @@
-cs50
 flask
 Flask-Session
 datamuse
@@ -6,5 +5,7 @@ werkzeug
 python-dotenv
 flask-sqlalchemy
 pymysql
+gunicorn
 pytest
 pytest-mock
+cryptography
