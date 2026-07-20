@@ -58,14 +58,20 @@ cd lexiboost
 
 # Create a virtual environment
 python -m venv venv
-source venv/bin/activate   # Windows: venv\\\\Scripts\\\\activate
+source venv/bin/activate   # Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
+# Create database with schema.sql
+
 # Set environment variables (create a .env file)
-# DATABASE\\\_URL=mysql://user:password@localhost/lexiboost
-# SECRET\\\_KEY=your-secret-key
+USER_BD=name-user
+PASS_BD=password-user
+HOST_BD=host:port
+NAME_BD=name-db
+SECRET_KEY=your-secret-key
+
 
 # Run the app
 flask run
